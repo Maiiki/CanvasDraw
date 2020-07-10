@@ -1,18 +1,17 @@
 #include "CCircle.h"
 
-/*///////////////////////////////////*/
-/*------------Constructors-----------*/
-/*///////////////////////////////////*/
 CCircle::CCircle(sf::Vector2f position)
 {
+	mType = shapeType::CIRCLE;
 	mCircle.setRadius(50.f);
-	mCircle.setPosition(position);
+	mCircle.setPosition(position.x - mCircle.getRadius(), position.y - mCircle.getRadius());
 	mCircle.setFillColor(sf::Color::Cyan);
 	SavePoints();
 }
 
 CCircle::CCircle(sf::Vector2f position, float radius)
 {
+	mType = shapeType::CIRCLE;
 	mCircle.setRadius(radius);
 	mCircle.setPosition(position.x - mCircle.getRadius(), position.y - mCircle.getRadius());
 	mCircle.setFillColor(sf::Color::Cyan);
@@ -21,6 +20,7 @@ CCircle::CCircle(sf::Vector2f position, float radius)
 
 CCircle::CCircle(sf::Vector2f position, float radius, sf::Color fillColor)
 {
+	mType = shapeType::CIRCLE;
 	mCircle.setRadius(radius);
 	mCircle.setPosition(position.x - mCircle.getRadius(), position.y - mCircle.getRadius());
 	mCircle.setFillColor(fillColor);

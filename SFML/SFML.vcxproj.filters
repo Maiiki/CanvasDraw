@@ -68,5 +68,8 @@
     <ClInclude Include="CIsometricShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestingClasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

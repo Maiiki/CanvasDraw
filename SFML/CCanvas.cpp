@@ -1,15 +1,11 @@
 #include "CCanvas.h"
 
-/*-Instancia*/
-//////////////////////////////////////////////////////
 CCanvas& CCanvas::instance()
 {
 	static CCanvas* instance = new CCanvas();
 	return *instance;
 }
 
-/*-GameLoop-*/
-//////////////////////////////////////////////////////
 void CCanvas::Run()
 {
 	sf::Clock clock;
@@ -18,30 +14,34 @@ void CCanvas::Run()
 	{
 		ProcessEvents();
 		timeSinceLastUpdate += clock.restart();
-		while (timeSinceLastUpdate > mTimePerFrame)
+		while (timeSinceLastUpdate > mFramesPerSeconds)
 		{
-			timeSinceLastUpdate -= mTimePerFrame;
+			timeSinceLastUpdate -= mFramesPerSeconds;
 			ProcessEvents();
-			Update(mTimePerFrame);
+			Update(mFramesPerSeconds);
 		}
 		Render();
 	}
 }
-//////////////////////////////////////////////////////
 
-/*-Constructor*/
-//////////////////////////////////////////////////////
+
 CCanvas::CCanvas()
 	:mWindow(sf::VideoMode(1000, 1000), "Basic Shapes"),
 	mbCircle(false), mbTriangle(false), mbSquare(false), mbFlyEye(false), mbIsometric(false), mbDrawing(false), mbErase(false), mbUndo(false),
-	mTimePerFrame(sf::seconds(1.f / 60.f))
+	mFramesPerSeconds(sf::seconds(1.f / 60.f)), rotateAngle(.60f)
 {
 	srand(time(NULL));
 }
-//////////////////////////////////////////////////////
-
-/*-Eventos*/
-//////////////////////////////////////////////////////
+/**
+ * Events proccessed:
+ *	- keyboard events
+ *		-# key press event
+ *		-# key release event
+ *	- mouse events
+ *		-# mouse click event
+ *	- window events
+ *		-# window close event
+ */
 void CCanvas::ProcessEvents()
 {
 	sf::Event event;
@@ -61,13 +61,19 @@ void CCanvas::ProcessEvents()
 		case sf::Event::Closed:
 			mWindow.close();
 			break;
-		}	
+		}
 	}
 }
-//////////////////////////////////////////////////////
-
-/*-Input*/
-//////////////////////////////////////////////////////
+/**
+ * Keyboard inputs handled:
+ *	- C	|	Draw a circle
+ *	- S	|	Draw a rectangle
+ *	- T	|	Draw a Triangle
+ *	- F	|	Draw a Fly Eye
+ *	- I	|	Alternate between isometric an normal view
+ *	- X	|	Delete all shapes
+ *	- Z	|	Delete the last shape
+ */
 void CCanvas::HandleInput(sf::Keyboard::Key key, bool isPressed)
 {
 	if (key == sf::Keyboard::C) { mbCircle = isPressed; }
@@ -82,7 +88,7 @@ void CCanvas::HandleInput(sf::Keyboard::Key key, bool isPressed)
 
 void CCanvas::HandleInput(sf::Mouse::Button btn, int x, int y)
 {
-	if(btn == sf::Mouse::Left)
+	if (btn == sf::Mouse::Left)
 	{
 		if (mbCircle || mbTriangle || mbSquare || mbFlyEye)
 		{
@@ -92,42 +98,39 @@ void CCanvas::HandleInput(sf::Mouse::Button btn, int x, int y)
 	}
 }
 
-//////////////////////////////////////////////////////
-/*-Update*/
-//////////////////////////////////////////////////////
 void CCanvas::Update(sf::Time deltaTime)
 {
-	// Update Shapes
-	if(mbDrawing)
+	//Updates Shapes
+	if (mbDrawing)
 	{
 		CShape* newShape = nullptr;
-		if(mbTriangle)
+		if (mbTriangle)
 		{
-			newShape = new CTriangle(sf::Vector2f(drawPosition.x, drawPosition.y), //mouse position
-				(float)(rand()%500+50), //random size
-				sf::Color(rand()%255, rand() % 255, rand() % 255, rand() % 255+100)); //random color
+			newShape = new CTriangle(sf::Vector2f(drawPosition.x, drawPosition.y), //Draws in the clicked position.
+				(float)(rand() % 500 + 50), //Sets random radius between 50 and 500.
+				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //Sets a random color.
 			allShapes.push_back(newShape);
 		}
-		if(mbSquare)
+		if (mbSquare)
 		{
-			newShape = new CSquare(sf::Vector2f(drawPosition.x, drawPosition.y),//mouse position
-				sf::Vector2f(rand() % 500 + 50, rand() % 500 + 50), //radius
-				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //random color
+			newShape = new CSquare(sf::Vector2f(drawPosition.x, drawPosition.y),//Draws in the clicked position.
+				sf::Vector2f(rand() % 500 + 50, rand() % 500 + 50), //Sets random height and width (different) between 50 and 500.
+				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //Sets a random color.
 			allShapes.push_back(newShape);
 		}
-		if(mbCircle)
+		if (mbCircle)
 		{
-			newShape = new CCircle(sf::Vector2f(drawPosition.x, drawPosition.y),//mouse position
-				(float)(rand() % 500 + 50), //radius
-				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //random color
+			newShape = new CCircle(sf::Vector2f(drawPosition.x, drawPosition.y),//Draws in the clicked position
+				(float)(rand() % 500 + 50), //Sets random radius between 50 and 500.
+				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //Sets a random color.
 			allShapes.push_back(newShape);
 		}
 		if (mbFlyEye)
 		{
-			newShape = new CFlyEye(sf::Vector2f(drawPosition.x, drawPosition.y), //mouse position
-				rand() % 20 + 10, //point number
-				(float)(rand() % 500 + 50), //radius
-			sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //random color
+			newShape = new CFlyEye(sf::Vector2f(drawPosition.x, drawPosition.y), //Draws in the clicked position
+				rand() % 20 + 10, //Sets a random point number between 10 and 20.
+				(float)(rand() % 500 + 50), //Sets random radius between 50 and 500.
+				sf::Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255 + 100)); //random color
 
 			allShapes.push_back(newShape);
 		}
@@ -142,7 +145,7 @@ void CCanvas::Update(sf::Time deltaTime)
 		for (auto& shape : allShapes)
 		{
 			CShape* newShape = nullptr;
-			newShape = new CRotateShape(shape, .60f);
+			newShape = new CRotateShape(shape, rotateAngle);
 			rotatedShapes.push_back(newShape);
 		}
 	}
@@ -152,8 +155,8 @@ void CCanvas::Update(sf::Time deltaTime)
 		allShapes.clear();
 		mbErase = false;
 	}
-	
-	if (mbUndo) 
+
+	if (mbUndo)
 	{
 		if (!allShapes.empty())
 		{
@@ -162,10 +165,7 @@ void CCanvas::Update(sf::Time deltaTime)
 		}
 	}
 }
-//////////////////////////////////////////////////////
 
-/*-Render*/
-//////////////////////////////////////////////////////
 void CCanvas::Render()
 {
 	mWindow.clear();
@@ -176,7 +176,6 @@ void CCanvas::Render()
 		{
 			shape->Draw(mWindow);
 		}
-
 	}
 	else
 	{
@@ -187,6 +186,7 @@ void CCanvas::Render()
 	}
 	mWindow.display();
 }
+
 void CCanvas::ConsolePrintShapesPoints()
 {
 	for (int i = 0; i < allShapes.size(); i++)
@@ -199,8 +199,3 @@ void CCanvas::ConsolePrintShapesPoints()
 		rotatedShapes[i]->ConsolePrintPoints(i);
 	}
 }
-//////////////////////////////////////////////////////
-
-
-
-

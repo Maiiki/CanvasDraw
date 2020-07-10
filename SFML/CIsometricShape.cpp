@@ -2,6 +2,7 @@
 
 CRotateShape::CRotateShape(CShape* shape, float angle)
 {
+	mType = shapeType::ISOMETRIC;
 	mPoints = shape->GetPoints();
 	rotate(angle);
 	SavePoints();

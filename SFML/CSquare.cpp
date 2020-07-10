@@ -1,10 +1,8 @@
 #include "CSquare.h"
 
-/*///////////////////////////////////*/
-/*------------Constructors-----------*/
-/*///////////////////////////////////*/
 CSquare::CSquare(sf::Vector2f position)
 {
+	mType = shapeType::SQUARE;
 	mRectangle.setSize(sf::Vector2f(100.f, 100.f));
 	mRectangle.setPosition(position.x - (mRectangle.getSize().x / 2), position.y - (mRectangle.getSize().y / 2));
 	mRectangle.setFillColor(sf::Color::Red);
@@ -13,6 +11,8 @@ CSquare::CSquare(sf::Vector2f position)
 
 CSquare::CSquare(sf::Vector2f position, sf::Vector2f size)
 {
+	mType = shapeType::SQUARE;
+
 	mRectangle.setSize(sf::Vector2f(size.x, size.y));
 	mRectangle.setPosition(position.x - (mRectangle.getSize().x / 2), position.y - (mRectangle.getSize().y / 2));
 	mRectangle.setFillColor(sf::Color::Red);
@@ -21,6 +21,8 @@ CSquare::CSquare(sf::Vector2f position, sf::Vector2f size)
 
 CSquare::CSquare(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor)
 {
+	mType = shapeType::SQUARE;
+
 	mRectangle.setSize(sf::Vector2f(size.x, size.y));
 	mRectangle.setPosition(position.x - (mRectangle.getSize().x / 2), position.y - (mRectangle.getSize().y / 2));
 	mRectangle.setFillColor(fillColor);

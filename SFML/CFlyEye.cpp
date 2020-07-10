@@ -2,7 +2,8 @@
 
 CFlyEye::CFlyEye(sf::Vector2f position, int points)
 {
-	mCircleBase.setPointCount(points);
+	mType = shapeType::FLYEYE;
+	mCircleBase.setPointCount(CheckValidPointsQtt(points));
 	mCircleBase.setRadius(50.f);
 	mCircleBase.setPosition(position.x-mCircleBase.getRadius(), position.y-mCircleBase.getRadius());
 	mCircleBase.setOutlineColor(sf::Color::Cyan);
@@ -12,6 +13,7 @@ CFlyEye::CFlyEye(sf::Vector2f position, int points)
 
 CFlyEye::CFlyEye(sf::Vector2f position, int points, float radius)
 {
+	mType = shapeType::FLYEYE;
 	mCircleBase.setPointCount(points);
 	mCircleBase.setRadius(radius);
 	mCircleBase.setPosition(position.x-radius, position.y-radius);
@@ -22,6 +24,7 @@ CFlyEye::CFlyEye(sf::Vector2f position, int points, float radius)
 
 CFlyEye::CFlyEye(sf::Vector2f position, int points, float radius, sf::Color linecolor)
 {
+	mType = shapeType::FLYEYE;
 	mCircleBase.setPointCount(points);
 	mCircleBase.setRadius(radius);
 	mCircleBase.setPosition(position.x-radius, position.y-radius);
@@ -49,17 +52,32 @@ void CFlyEye::SavePoints()
 
 void CFlyEye::Draw(sf::RenderWindow& window)
 {
-	sf::Vertex line[2];
-	for (size_t i = 0; i < mPoints.size(); i++)
+	try
 	{
-		for (size_t j = i; j < mPoints.size(); j++)
+		sf::Vertex line[2];
+		for (size_t i = 0; i < mPoints.size(); i++)
 		{
-			line[0] = sf::Vertex(mPoints[i]);
-			line[1] = sf::Vertex(mPoints[j]);
-			line[0].color = linesColor;
-			line[1].color = linesColor;
-			window.draw(line, 2, sf::Lines);
+			for (size_t j = i; j < mPoints.size(); j++)
+			{
+				line[0] = sf::Vertex(mPoints[i]);
+				line[1] = sf::Vertex(mPoints[j]);
+				line[0].color = linesColor;
+				line[1].color = linesColor;
+				window.draw(line, 2, sf::Lines);
+			}
 		}
 	}
+	catch (const std::exception& e)
+	{
+		throw std::exception("Error drawing triangle");
+		std::cerr << e.what();
+	}
+	
 }
+
+int CFlyEye::CheckValidPointsQtt(int qttPoints)
+{
+	if (qttPoints % 2 == 0) { return qttPoints++; }
+}
+
 

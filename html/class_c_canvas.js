@@ -1,0 +1,26 @@
+var class_c_canvas =
+[
+    [ "CCanvas", "class_c_canvas.html#a097712fc4e1a486568f9ec397382a7f1", null ],
+    [ "ConsolePrintShapesPoints", "class_c_canvas.html#adfd2f15ed1be7324abd12ec5489f7035", null ],
+    [ "HandleInput", "class_c_canvas.html#a6f8acf55ccab6e8aceb03c3b85f756c0", null ],
+    [ "HandleInput", "class_c_canvas.html#a632d77bcd1bbc3710343ef233a395ab8", null ],
+    [ "instance", "class_c_canvas.html#ac8d08b7e98064e4250b09f415a3b80b5", null ],
+    [ "ProcessEvents", "class_c_canvas.html#a883d034f4a5177643a47beee81d35fcc", null ],
+    [ "Render", "class_c_canvas.html#aee144682f0d40ed57ab3716604b3eaf4", null ],
+    [ "Run", "class_c_canvas.html#a2a08c2d8dbb1ae851a3228c16db859b6", null ],
+    [ "Update", "class_c_canvas.html#a3cf4fb4099264c20bcd92fc78ee7ff79", null ],
+    [ "allShapes", "class_c_canvas.html#a6551d52e960044425c399a8f4724376d", null ],
+    [ "drawPosition", "class_c_canvas.html#a3adfcfe0bed2efcd43ff283c3d53605a", null ],
+    [ "mbCircle", "class_c_canvas.html#acf69ef1105a4e759c875e2301222e8b7", null ],
+    [ "mbDrawing", "class_c_canvas.html#a5d9198d16098a33e976a60a6bd1ba90f", null ],
+    [ "mbErase", "class_c_canvas.html#a0753e2f17386f1ff2b9812839b4422c2", null ],
+    [ "mbFlyEye", "class_c_canvas.html#ae300ae5ff4ff44dd002bdddcc780496e", null ],
+    [ "mbIsometric", "class_c_canvas.html#a16e3c076d19ce53c9b26587f8c401290", null ],
+    [ "mbSquare", "class_c_canvas.html#a3c07d8c8e457ae80309d2ae24d7e570a", null ],
+    [ "mbTriangle", "class_c_canvas.html#a74df76dbe21ce51a2f299e8321bc9f04", null ],
+    [ "mbUndo", "class_c_canvas.html#aabfa3b63d4b8324febdafd0199bcefee", null ],
+    [ "mFramesPerSeconds", "class_c_canvas.html#a6098911aab1e47957d8c927cb7625b95", null ],
+    [ "mWindow", "class_c_canvas.html#a18727804132ff8b2ed686fbc37b3ea78", null ],
+    [ "rotateAngle", "class_c_canvas.html#a8007786cb1678c0b5ca6fd67946214c5", null ],
+    [ "rotatedShapes", "class_c_canvas.html#af7665daf5cee7aebad273c87fb46bc75", null ]
+];

@@ -1,10 +1,8 @@
 #include "CTriangle.h"
 
-/*///////////////////////////////////*/
-/*------------Constructors-----------*/
-/*///////////////////////////////////*/
 CTriangle::CTriangle(sf::Vector2f position)
 {
+	mType = shapeType::TRIANGLE;
 	mTriangle.setPointCount(3);
 	mTriangle.setRadius(50.f);
 	mTriangle.setPosition(position.x - mTriangle.getRadius(), position.y - mTriangle.getRadius());
@@ -14,6 +12,7 @@ CTriangle::CTriangle(sf::Vector2f position)
 
 CTriangle::CTriangle(sf::Vector2f position, float radius)
 {
+	mType = shapeType::TRIANGLE;
 	mTriangle.setPointCount(3);
 	mTriangle.setRadius(radius);
 	mTriangle.setPosition(position.x - mTriangle.getRadius(), position.y - mTriangle.getRadius());
@@ -22,6 +21,7 @@ CTriangle::CTriangle(sf::Vector2f position, float radius)
 
 CTriangle::CTriangle(sf::Vector2f position, float radius, sf::Color fillColor)
 {
+	mType = shapeType::TRIANGLE;
 	mTriangle.setPointCount(3);
 	mTriangle.setRadius(radius);
 	mTriangle.setPosition(position.x - mTriangle.getRadius(), position.y - mTriangle.getRadius());
